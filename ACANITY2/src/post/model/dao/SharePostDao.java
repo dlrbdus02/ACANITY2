@@ -47,21 +47,18 @@ public class SharePostDao {
    }
 
    public ArrayList<Post> selectSearch(Connection conn, String title, int cno) {
-	   PreparedStatement pstmt = null;
+	   Statement stmt = null;
 	   ResultSet rset = null;
 	   ArrayList<Post> list = new ArrayList<Post>();
 	   
 	   String query = "select p_no, p_title, p_id, p_date, p_readcount "
 			   		+ "from post "
-			   		+ "where p_code = 2 and p_depth = 1 and c_no = ? "
-			   		+ "and p_title like ? "
+			   		+ "where p_code = 2 and p_depth = 1 and c_no = " + cno
+			   		+ " and p_title like '%" + title + "%' "
 			   		+ "order by p_no desc";
-
 	   try {
-		pstmt = conn.prepareStatement(query);
-		pstmt.setInt(1, cno);
-		pstmt.setString(2, "'%" + title + "%'");
-		rset = pstmt.executeQuery();
+		   stmt = conn.createStatement();
+		   rset = stmt.executeQuery(query);
 		
 		while(rset.next()){
 			Post post = new Post();
@@ -70,14 +67,14 @@ public class SharePostDao {
 			post.setpId(rset.getString(3));
 			post.setpDate(rset.getDate(4));
 			post.setReadCount(rset.getInt(5));
+
 			list.add(post);
 		}
-		
 	} catch (Exception e) {
 		e.printStackTrace();
 	} finally {
-		close(pstmt);
 		close(rset);
+		close(stmt);
 	}
       return list;
    }

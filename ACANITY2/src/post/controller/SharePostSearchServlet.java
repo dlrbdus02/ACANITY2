@@ -23,7 +23,9 @@ public class SharePostSearchServlet extends HttpServlet {
     
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// 파일 공유 게시판 : 게시글 검색 처리용 컨트롤러
-
+		response.setContentType("text/html; charset=utf-8");
+		request.setCharacterEncoding("utf-8");
+		
 		String title = request.getParameter("title");
 		int cno = Integer.parseInt(request.getParameter("cno"));
 		
