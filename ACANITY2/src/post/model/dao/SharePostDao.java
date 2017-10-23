@@ -60,7 +60,33 @@ public class SharePostDao {
 
    public int insertPost(Connection conn, Post post) {
       // 게시글/댓글 등록
-      return 0;
+	  int result = 0;
+	  PreparedStatement pstmt = null;
+	  ResultSet rset = null;
+	  
+	  String query = "insert into post values(?, 2, ?, ?, 0, sysdate, "
+	  		+ "0, ?, ?, ?, ?, 1, 0, ?)";
+	  
+	  try {
+		pstmt = conn.prepareStatement(query);
+		pstmt.setInt(1, post.getpNo());
+		pstmt.setString(2, post.getpTitle());
+		pstmt.setString(3, post.getpContent());
+		pstmt.setString(4, post.getpPw());
+		pstmt.setString(5, post.getOriginalFileName());
+		pstmt.setString(6, post.getRenameFileName());
+		pstmt.setString(7, post.getpId());
+		pstmt.setInt(8, post.getcNo());
+		
+		result = pstmt.executeUpdate();
+		
+	} catch (Exception e) {
+		e.printStackTrace();
+	} finally{
+		close(rset);
+		close(pstmt);
+	}
+      return result;
    }
 
    public int updatePost(Connection conn, Post post) {
@@ -79,18 +105,23 @@ public class SharePostDao {
       return 0;
    }
 
-	public int getMaxNumber(Connection conn, int cno) {
+	public int getNextNumber(Connection conn, int cno) {
 		// 게시물 다음 번호 조회
-		Statement stmt = null;
+		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		int no = 0;
 		
 		String query = "select max(p_no) from post "
-				+ "where p_code = 2 and p_depth = 1 and cno = " + cno;
+				+ "where p_code = 2 and p_depth = 1 and c_no = ?";
 		
 		try {
-			rset = stmt.executeQuery(query);
-			no = rset.getInt(1) + 1;
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, cno);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next())
+				no = rset.getInt(1) + 1;
 			
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -185,7 +185,7 @@ body{
 
 #write_box1_sub2{
 	width: 37%;
-	height: 29px;
+	height: 86px;
 	display: inline-block;
 	float: left;
 	font-size: 10pt;
@@ -194,11 +194,12 @@ body{
 	border: 1px solid #525c6d;
 	background-color: #d1dbe2;
 	overflow: hidden;
+	margin-top: 6px;
 }
 
 #write_box1_sub2_1{
 	width: 37%;
-	height: 130px;
+	height: 70px;
 	display: inline-block;
 	float: left;
 	font-size: 9pt;
@@ -278,6 +279,23 @@ body{
 	border-color: #0054a8;
 	border-bottom-width: 4px;
 	border-radius: 6px;
+}
+
+#write_button2{
+	width: 40px;
+	height: 22px;
+	text-align: center;
+	font-size: 9pt;
+	color: #ffffff;
+	background-color: #525c6d;
+	border-style: solid;
+	border-color: #525c6d;
+	border-bottom-width: 4px;
+	border-radius: 6px;
+	
+	margin: 2px;
+	display: block;
+	float: left;
 }
 
 #write_table1{

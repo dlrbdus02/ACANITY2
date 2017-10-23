@@ -14,9 +14,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
+
 import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
-
 
 import post.model.service.SharePostService;
 import post.model.vo.Post;
@@ -32,75 +33,154 @@ public class SharePostInsertServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// 파일 공유 게시판 : 게시글, 댓글 등록 처리용 컨트롤러
-		request.setCharacterEncoding("utf-8");
 		response.setContentType("text/html; charset=utf-8");
+		response.setCharacterEncoding("utf-8");
 
-		int size = 10 * 1024 * 1024;
+		// 저장 경로
+		String root = request.getSession().getServletContext().getRealPath("/");
+		String savePath = root + "uploadfiles";
+		
+		// 파일 최대 크기
+		int MaxSize = 10 * 1024 * 1024;
 
-		// multipart/form-data 형식으로 전송되지 않았으면 에러페이지
+		// get으로 전달받은 값
+		int cno = Integer.parseInt(request.getParameter("cno"));
+
+		SharePostService spservice = new SharePostService();
 		RequestDispatcher view = null;
+		
 		if (!ServletFileUpload.isMultipartContent(request)) {
 			view = request.getRequestDispatcher("acanity/views/postError.jsp");
 			request.setAttribute("message", "Form enctype 속성 사용 안 함");
 			view.forward(request, response);
 		}
-
-		SharePostService spservice = new SharePostService();
-
-		int cno = Integer.parseInt(request.getParameter("cno"));
-		String root = request.getSession().getServletContext().getRealPath("/");
-		String uploadPath = root + "suploadfiles";
-
+		
 		// request, 업로드경로, 파일최대크기, 한글처리, 파일중복처리
-		MultipartRequest multi = new MultipartRequest(request, uploadPath, size, "UTF-8",
+		MultipartRequest multi = new MultipartRequest(request, savePath, MaxSize, "UTF-8",
 				new DefaultFileRenamePolicy());
 
 		String title = multi.getParameter("title");
 		String writer = multi.getParameter("writer");
 		String content = multi.getParameter("content");
 		String pwd = multi.getParameter("pwd");
+		
+		String oname1 = multi.getFilesystemName("uploadfile1");
+		String oname2 = multi.getFilesystemName("uploadfile2");
+		String oname3 = multi.getFilesystemName("uploadfile3");
 
-		String originalFileName = multi.getFilesystemName("upfile");
-		Post p = null;
-		// Enumeration files = multi.getFileNames();
-		// while(files.hasMoreElements()){
-		// String file = (String)files.nextElement();
-		if (originalFileName != null) {
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
-			String renameFileName = sdf.format(new java.sql.Date(System.currentTimeMillis())) + "."
-					+ originalFileName.substring(originalFileName.lastIndexOf(".") + 1);
+		Post post = null;
+		String onames = null;
+		String rnames = null;
 
-			// 업로드되어 있는 원래 파일의 이름을 새 이름으로 바꾸기
-			File originalFile = new File(uploadPath + "\\" + originalFileName);
-			File renameFile = new File(uploadPath + "\\" + renameFileName);
-
-			// 파일이름 바꾸기 실행 >> 실패시 직접 바꾸기함
-			// 새 파일 만들고, 원래 파일의 내용 읽어서 복사 기록하고
-			// 원 파일 삭제함
-			if (!originalFile.renameTo(renameFile)) {
+		int no = spservice.getNextNumber(cno);
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+		
+		if(oname1 != null){
+			String rname1 = sdf.format(
+					new java.sql.Date(System.currentTimeMillis())) + "1."
+					+ oname1.substring(oname1.lastIndexOf(".") + 1);
+			
+			//업로드되어 있는 원래 파일의 이름을 새 이름으로 바꾸기
+			File originalFile = new File(savePath + "\\" + oname1);
+			File renameFile = new File(savePath + "\\" + rname1);
+			
+			//파일이름 바꾸기 실행 >> 실패시 직접 바꾸기함
+			//새 파일 만들고, 원래 파일의 내용 읽어서 복사 기록하고
+			//원 파일 삭제함
+			if(!originalFile.renameTo(renameFile)){
 				int read = -1;
 				byte[] buf = new byte[1024];
-
+				
 				FileInputStream fin = new FileInputStream(originalFile);
 				FileOutputStream fout = new FileOutputStream(renameFile);
-
-				while ((read = fin.read(buf, 0, buf.length)) != -1)
+				
+				while((read = fin.read(buf, 0, buf.length)) != -1)
 					fout.write(buf, 0, read);
-
+				
 				fin.close();
 				fout.close();
 				originalFile.delete();
 			}
-			int no = spservice.getMaxNumber(cno) + 1;
-
-			p = new Post(no, title, content, pwd, originalFileName, renameFileName, writer, cno);
-		} else {
-			p = new Post();
+			onames += oname1;
+			rnames += rname1;
 		}
-	}
-
-	Post post = null;
-	int result = new SharePostService().insertPost(post);
+		
+		if(oname2 != null){
+			String rname2 = sdf.format(
+					new java.sql.Date(System.currentTimeMillis())) + "2."
+					+ oname2.substring(oname2.lastIndexOf(".") + 1);
+			
+			//업로드되어 있는 원래 파일의 이름을 새 이름으로 바꾸기
+			File originalFile = new File(savePath + "\\" + oname2);
+			File renameFile = new File(savePath + "\\" + rname2);
+			
+			//파일이름 바꾸기 실행 >> 실패시 직접 바꾸기함
+			//새 파일 만들고, 원래 파일의 내용 읽어서 복사 기록하고
+			//원 파일 삭제함
+			if(!originalFile.renameTo(renameFile)){
+				int read = -1;
+				byte[] buf = new byte[1024];
+				
+				FileInputStream fin = new FileInputStream(originalFile);
+				FileOutputStream fout = new FileOutputStream(renameFile);
+				
+				while((read = fin.read(buf, 0, buf.length)) != -1)
+					fout.write(buf, 0, read);
+				
+				fin.close();
+				fout.close();
+				originalFile.delete();
+			}
+			if(oname1 != null){
+				onames += ",";
+				rnames += ",";
+			}
+			onames += oname2;
+			rnames += rname2;
+		}
+		
+		if(oname3 != null){
+			String rname3 = sdf.format(
+					new java.sql.Date(System.currentTimeMillis())) + "3."
+					+ oname3.substring(oname3.lastIndexOf(".") + 1);
+			
+			//업로드되어 있는 원래 파일의 이름을 새 이름으로 바꾸기
+			File originalFile = new File(savePath + "\\" + oname3);
+			File renameFile = new File(savePath + "\\" + rname3);
+			
+			//파일이름 바꾸기 실행 >> 실패시 직접 바꾸기함
+			//새 파일 만들고, 원래 파일의 내용 읽어서 복사 기록하고
+			//원 파일 삭제함
+			if(!originalFile.renameTo(renameFile)){
+				int read = -1;
+				byte[] buf = new byte[1024];
+				
+				FileInputStream fin = new FileInputStream(originalFile);
+				FileOutputStream fout = new FileOutputStream(renameFile);
+				
+				while((read = fin.read(buf, 0, buf.length)) != -1)
+					fout.write(buf, 0, read);
+				
+				fin.close();
+				fout.close();
+				originalFile.delete();
+			}
+			if(oname2 != null || oname1 != null){
+				onames += ",";
+				rnames += ",";
+			}
+			onames += oname3;
+			rnames += rname3;
+		}
+		post = new Post(no, title, content, pwd, onames, rnames, writer, cno);
+		
+		if(spservice.insertPost(post) > 0){
+			response.sendRedirect("/acanity/splist?cno=" + cno);
+		}else{
+			view = request.getRequestDispatcher("views/post/shareError.jsp");
+			request.setAttribute("message", "게시글 등록 실패");
+			view.forward(request, response);
+		}
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)

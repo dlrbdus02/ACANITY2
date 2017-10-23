@@ -27,7 +27,7 @@ public class SharePostListServlet extends HttpServlet {
 		// 파일 공유 게시판 : 게시글 리스트 보기 처리용 컨트롤러
 		
 		//가짜데이터
-		Member member = new Member("아이디", "비밀번호", "이름", "A", "오전", "01091901099", "이메일");
+		Member member = new Member("user33", "비밀번호", "이름", "A", "오전", "01091901099", "이메일");
 		HttpSession session = request.getSession();
 		session.setAttribute("member", member);
 		

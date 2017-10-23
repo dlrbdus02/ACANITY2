@@ -25,7 +25,21 @@ public class Post implements java.io.Serializable {
    // Constructor : default
    public Post(){}
 
-   // Constructor : all
+   // Constructor : share post insert
+   public Post(int pNo, String pTitle, String pContent, String pPw, String originalFileName, String renameFileName,
+		String pId, int cNo) {
+	super();
+	this.pNo = pNo;
+	this.pTitle = pTitle;
+	this.pContent = pContent;
+	this.pPw = pPw;
+	this.originalFileName = originalFileName;
+	this.renameFileName = renameFileName;
+	this.pId = pId;
+	this.cNo = cNo;
+}
+
+// Constructor : all
    public Post(int pNo, int pCode, String pTitle, String pContent, int readCount, Date pDate, int pOpen, String pPw,
 			String originalFileName, String renameFileName, String pId, int depth, int refNo, int cNo) {
 		super();
