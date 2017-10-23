@@ -73,9 +73,9 @@ public class SharePostService {
    }
    
    // 조회수 1 증가
-   public void addReadCount(int no) {
+   public void addReadCount(int no, int cno) {
       Connection conn = getConnection();
-      int result = new SharePostDao().addReadCount(conn, no);
+      int result = new SharePostDao().addReadCount(conn, no, cno);
       if(result > 0)
          commit(conn);
       else

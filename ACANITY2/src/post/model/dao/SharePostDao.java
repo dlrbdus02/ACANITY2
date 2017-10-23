@@ -125,10 +125,24 @@ public class SharePostDao {
       return 0;
    }
 
-   public int addReadCount(Connection conn, int no) {
+   public int addReadCount(Connection conn, int no, int cno) {
       // 게시글 조회수 1 증가
-      
-      return 0;
+	   int result = 0;
+		PreparedStatement pstmt = null;
+		String query = "update post set p_readcount = p_readcount + 1 "
+					+ "where p_code = 2 and p_depth = 1 "
+					+ "and p_no = ? and c_no = ?";
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, no);
+			pstmt.setInt(2, cno);
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally{
+			close(pstmt);
+		}
+		return result;
    }
 
 	public int getNextNumber(Connection conn, int cno) {

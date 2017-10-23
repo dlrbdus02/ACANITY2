@@ -6,6 +6,11 @@ body{
 	
 }
 
+#none_linka{
+	color: #525c6d;
+	text-decoration: none;
+}
+
 #list_box1{
 	width: 100%;
 	height: 54px;

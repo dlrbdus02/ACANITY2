@@ -1,6 +1,8 @@
 package post.controller;
 
 import java.io.IOException;
+
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -20,12 +22,26 @@ public class SharePostDetailServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// 파일 공유 게시판 : 게시글 상세보기 처리용 컨트롤러
+		response.setContentType("text/html; charset=utf-8");
 		
 		int no = Integer.parseInt(request.getParameter("no"));
+		int cno = Integer.parseInt(request.getParameter("cno"));
 		
 		// 조회수 1 증가 처리
-		new SharePostService().addReadCount(no);
+		new SharePostService().addReadCount(no, cno);
 		Post post = new SharePostService().selectPost(no);
+		
+		RequestDispatcher view = null;
+		if(post != null){
+			view = request.getRequestDispatcher("views/post/shareDetailView.jsp");
+			request.setAttribute("post", post);
+			view.forward(request, response);
+		}else{
+			view = request.getRequestDispatcher("views/post/shareError.jsp");
+			request.setAttribute("message", "게시글 상세보기 실패");
+			view.forward(request, response);
+		}
+		
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
