@@ -79,9 +79,38 @@ public class SharePostDao {
       return list;
    }
 
-   public Post selectPost(Connection conn, int no) {
+   public Post selectPost(Connection conn, int no, int cno) {
       // 게시글 상세 조회
-      return null;
+	   Post post = null;
+	   PreparedStatement pstmt = null;
+	   ResultSet rset = null;
+	   
+	   String query = "select * from post "
+			   		+ "where p_code = 2 and p_depth = 1 "
+			   		+ "and c_no = ? and p_no = ?";
+	   try {
+		   pstmt = conn.prepareStatement(query);
+		   pstmt.setInt(1, cno);
+		   pstmt.setInt(2, no);
+		   rset = pstmt.executeQuery();
+		   
+		   while(rset.next()){
+			   post = new Post();
+			   post.setpTitle(rset.getString("p_title"));
+			   post.setpContent(rset.getString("p_content"));
+			   post.setReadCount(rset.getInt("p_readcount"));
+			   post.setpDate(rset.getDate("p_date"));
+			   post.setpId(rset.getString("p_id"));
+			   post.setRenameFileName(rset.getString("p_renamefilename"));
+		   }
+		   
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally{
+			close(rset);
+			close(pstmt);
+		}
+      return post;
    }
 
    public int insertPost(Connection conn, Post post) {

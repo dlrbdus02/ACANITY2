@@ -4,6 +4,7 @@
 <%
 	Member member = (Member)session.getAttribute("member");
 	int cno = Integer.parseInt(request.getParameter("cno"));
+	Post post = (Post)request.getAttribute("post");
 %>
 <!DOCTYPE html>
 <html>
@@ -11,24 +12,6 @@
 <meta charset="UTF-8">
 <title>shareListView</title>
 <link rel="stylesheet" href="/acanity/css/sharepost.css">
-<script type="text/javascript">
-	//NULL값 체크
-	function check(){
-		if(document.form.title.value == ""){
-			alert("제목을 입력해주세요.");
-			return;
-		}
-		if(document.form.content.value == ""){
-			alert("내용을 입력해주세요.");
-			return;
-		}
-		if(document.form.pwd.value == ""){
-			alert("비밀번호를 입력해주세요.");
-			return;
-		}
-		form.submit();
-	}
-</script>
 </head>
 <body>
 <div id="list_box1">
@@ -38,7 +21,7 @@
 
 <div id="list_box2">
 	<div id="write_box3">
-		<span id="write_span1">파일 업로드</span>
+		<span id="write_span1"><%= post.getpTitle() %></span>
 		<a href="javascript:history.back();"><span id="write_span2">뒤로</span></a>
 	</div>
 <form name="form" action="../../spinsert?cno=<%=cno%>" method="post" enctype="multipart/form-data">

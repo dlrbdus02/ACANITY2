@@ -29,9 +29,9 @@ public class SharePostService {
    }
    
    // 게시글 상세보기
-   public Post selectPost(int no){
+   public Post selectPost(int no, int cno){
       Connection conn = getConnection();
-      Post post = new SharePostDao().selectPost(conn, no);
+      Post post = new SharePostDao().selectPost(conn, no, cno);
       close(conn);
       return post;
    }

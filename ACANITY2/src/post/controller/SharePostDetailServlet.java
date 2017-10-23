@@ -24,12 +24,12 @@ public class SharePostDetailServlet extends HttpServlet {
 		// 파일 공유 게시판 : 게시글 상세보기 처리용 컨트롤러
 		response.setContentType("text/html; charset=utf-8");
 		
-		int no = Integer.parseInt(request.getParameter("no"));
+		int no = Integer.parseInt(request.getParameter("pno"));
 		int cno = Integer.parseInt(request.getParameter("cno"));
 		
 		// 조회수 1 증가 처리
 		new SharePostService().addReadCount(no, cno);
-		Post post = new SharePostService().selectPost(no);
+		Post post = new SharePostService().selectPost(no, cno);
 		
 		RequestDispatcher view = null;
 		if(post != null){
@@ -41,7 +41,6 @@ public class SharePostDetailServlet extends HttpServlet {
 			request.setAttribute("message", "게시글 상세보기 실패");
 			view.forward(request, response);
 		}
-		
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
