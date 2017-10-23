@@ -21,9 +21,9 @@ public class SharePostService {
    }
    
    // 제목으로 검색한 리스트 불러오기
-   public ArrayList<Post> selectSearch(String title){
+   public ArrayList<Post> selectSearch(String title, int cno){
       Connection conn = getConnection();
-      ArrayList<Post> list = new SharePostDao().selectSearch(conn, title);
+      ArrayList<Post> list = new SharePostDao().selectSearch(conn, title, cno);
       close(conn);
       return list;
    }

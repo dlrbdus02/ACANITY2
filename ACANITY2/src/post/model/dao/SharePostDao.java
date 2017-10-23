@@ -19,14 +19,12 @@ public class SharePostDao {
 	   
 	   String query = "select p_no, p_title, p_id, p_date, p_readcount "
 			   		+ "from post "
-			   		+ "where p_code = ? and p_depth = ? and c_no = ? "
+			   		+ "where p_code = 2 and p_depth = 1 and c_no = ? "
 			   		+ "order by p_no desc";
 	   
 	   try {
 		pstmt = conn.prepareStatement(query);
-		pstmt.setInt(1, 2);
-		pstmt.setInt(2, 1);
-		pstmt.setInt(3, cno);
+		pstmt.setInt(1, cno);
 		rset = pstmt.executeQuery();
 		
 		while(rset.next()){
@@ -48,9 +46,40 @@ public class SharePostDao {
       return list;
    }
 
-   public ArrayList<Post> selectSearch(Connection conn, String title) {
-      // 게시글 제목으로 검색 조회
-      return null;
+   public ArrayList<Post> selectSearch(Connection conn, String title, int cno) {
+	   PreparedStatement pstmt = null;
+	   ResultSet rset = null;
+	   ArrayList<Post> list = new ArrayList<Post>();
+	   
+	   String query = "select p_no, p_title, p_id, p_date, p_readcount "
+			   		+ "from post "
+			   		+ "where p_code = 2 and p_depth = 1 and c_no = ? "
+			   		+ "and p_title like ? "
+			   		+ "order by p_no desc";
+
+	   try {
+		pstmt = conn.prepareStatement(query);
+		pstmt.setInt(1, cno);
+		pstmt.setString(2, "'%" + title + "%'");
+		rset = pstmt.executeQuery();
+		
+		while(rset.next()){
+			Post post = new Post();
+			post.setpNo(rset.getInt(1));
+			post.setpTitle(rset.getString(2));
+			post.setpId(rset.getString(3));
+			post.setpDate(rset.getDate(4));
+			post.setReadCount(rset.getInt(5));
+			list.add(post);
+		}
+		
+	} catch (Exception e) {
+		e.printStackTrace();
+	} finally {
+		close(pstmt);
+		close(rset);
+	}
+      return list;
    }
 
    public Post selectPost(Connection conn, int no) {

@@ -15,7 +15,7 @@
 <link rel="stylesheet" href="/acanity/css/sharepost.css">
 <script type="text/javascript">
 	function postWrite(){
-		location.href = "/acanity/views/post/shareWriteForm.jsp?cno=<%=cno%>";
+		location.href = "/acanity/views/post/shareWriteForm.jsp?cno=" + <%=cno%>;
 	}
 </script>
 </head>
@@ -48,9 +48,12 @@
 	</div>
 	<div id="list_box2_sub2">
 		<div id="list_box2_sub2_1">
+			<form action = "spsearch?cno=<%=cno%>" method=post>
 			<input id="list_input1" type="text" name="title" placeholder=" 제목을 입력하세요." size="26">
-			<button id="list_button1">검색</button>
+			<button id="list_button1" type="submit" style="cursor: pointer">검색</button>
+			</form>
 		</div>
+		
 		<div id="list_box2_sub2_2">
 			<button id="list_button2" onclick="postWrite()" style="cursor: pointer">올리기</button>
 		</div>

@@ -3,6 +3,7 @@ package post.controller;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -24,7 +25,21 @@ public class SharePostSearchServlet extends HttpServlet {
 		// 파일 공유 게시판 : 게시글 검색 처리용 컨트롤러
 
 		String title = request.getParameter("title");
-		ArrayList<Post> list = new SharePostService().selectSearch(title);
+		int cno = Integer.parseInt(request.getParameter("cno"));
+		
+		ArrayList<Post> list = new SharePostService().selectSearch(title, cno);
+		
+		RequestDispatcher view = null;
+		if (list != null){
+			view = request.getRequestDispatcher("views/post/shareListView.jsp?cno=" + cno);
+			request.setAttribute("list", list);
+			view.forward(request, response);
+		}else{
+			view = request.getRequestDispatcher("views/post/shareError.jsp");
+			request.setAttribute("message", "리스트 불러오기 실패");
+			view.forward(request, response);
+		}
+		
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
