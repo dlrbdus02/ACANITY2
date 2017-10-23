@@ -11,7 +11,7 @@
 <head>
 <meta charset="UTF-8">
 <title>shareListView</title>
-<link rel="stylesheet" href="sharepost.css">
+<link rel="stylesheet" href="/acanity/css/sharepost.css">
 <script type="text/javascript">
 	//NULL값 체크
 	function check(){
