@@ -75,18 +75,19 @@ public class SharePostInsertServlet extends HttpServlet {
 		int no = spservice.getNextNumber(cno);
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
 		
+		if(oname1 != null || oname2 != null || oname3 != null){
+			onames = "";
+			rnames = "";
+		}
+		
 		if(oname1 != null){
 			String rname1 = sdf.format(
 					new java.sql.Date(System.currentTimeMillis())) + "1."
 					+ oname1.substring(oname1.lastIndexOf(".") + 1);
 			
-			//업로드되어 있는 원래 파일의 이름을 새 이름으로 바꾸기
 			File originalFile = new File(savePath + "\\" + oname1);
 			File renameFile = new File(savePath + "\\" + rname1);
 			
-			//파일이름 바꾸기 실행 >> 실패시 직접 바꾸기함
-			//새 파일 만들고, 원래 파일의 내용 읽어서 복사 기록하고
-			//원 파일 삭제함
 			if(!originalFile.renameTo(renameFile)){
 				int read = -1;
 				byte[] buf = new byte[1024];
@@ -110,13 +111,9 @@ public class SharePostInsertServlet extends HttpServlet {
 					new java.sql.Date(System.currentTimeMillis())) + "2."
 					+ oname2.substring(oname2.lastIndexOf(".") + 1);
 			
-			//업로드되어 있는 원래 파일의 이름을 새 이름으로 바꾸기
 			File originalFile = new File(savePath + "\\" + oname2);
 			File renameFile = new File(savePath + "\\" + rname2);
 			
-			//파일이름 바꾸기 실행 >> 실패시 직접 바꾸기함
-			//새 파일 만들고, 원래 파일의 내용 읽어서 복사 기록하고
-			//원 파일 삭제함
 			if(!originalFile.renameTo(renameFile)){
 				int read = -1;
 				byte[] buf = new byte[1024];
@@ -144,13 +141,9 @@ public class SharePostInsertServlet extends HttpServlet {
 					new java.sql.Date(System.currentTimeMillis())) + "3."
 					+ oname3.substring(oname3.lastIndexOf(".") + 1);
 			
-			//업로드되어 있는 원래 파일의 이름을 새 이름으로 바꾸기
 			File originalFile = new File(savePath + "\\" + oname3);
 			File renameFile = new File(savePath + "\\" + rname3);
 			
-			//파일이름 바꾸기 실행 >> 실패시 직접 바꾸기함
-			//새 파일 만들고, 원래 파일의 내용 읽어서 복사 기록하고
-			//원 파일 삭제함
 			if(!originalFile.renameTo(renameFile)){
 				int read = -1;
 				byte[] buf = new byte[1024];

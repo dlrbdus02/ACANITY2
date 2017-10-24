@@ -101,6 +101,7 @@ public class SharePostDao {
 			   post.setReadCount(rset.getInt("p_readcount"));
 			   post.setpDate(rset.getDate("p_date"));
 			   post.setpId(rset.getString("p_id"));
+			   post.setOriginalFileName(rset.getString("p_originalfilename"));
 			   post.setRenameFileName(rset.getString("p_renamefilename"));
 		   }
 		   
