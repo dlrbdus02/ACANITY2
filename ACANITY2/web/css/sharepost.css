@@ -354,6 +354,12 @@ body{
 	font-size: 7pt;
 }
 
+#detail_table1{
+	width: 100%;
+	text-align: center;
+	color: #525c6d;
+}
+
 #detail_button1{
 	height: 30px;
 	width: 60px;

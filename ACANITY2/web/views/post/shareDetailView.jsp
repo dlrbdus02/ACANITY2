@@ -23,24 +23,24 @@
 <input type="hidden" name="writer" value="<%= member.getmId() %>">
 	<div id="write_box1">
 		<div id="write_box1_sub1">
-			<table id="write_table1" cellspacing="0" style="border-collapse : collapse;">
+			<table id="detail_table1" cellspacing="0" style="border-collapse : collapse;">
 				<tr><th width="18%" style="border-top-width: 0;">제목</th>
-					<td style="border-top-width: 0;">
-					<%= post.getpTitle() %>
-					</td></tr>
+					<td style="border-top-width: 0;"><%= post.getpTitle() %></td>
+						<td style="border-top-width: 0;"></td></tr>
 				<tr><th>작성자</th>
-					<td><%= member.getmId() %>
-					</td></tr>
+					<td><%= member.getmId() %></td>
+					<td></td></tr>
 				<tr height="149"><th>내용</th>
+					<td><%= post.getpContent() %></td>
 					<td>
-					<%= post.getpContent() %>
-					</td></tr>
+						<div id="write_box1_sub2">
+							<input type="file" name="uploadfile1" id="write_file1">
+							<input type="file" name="uploadfile2" id="write_file1">
+							<input type="file" name="uploadfile3" id="write_file1">
+						</div>
+					</td>
+				</tr>
 			</table>
-		</div>
-		<div id="write_box1_sub2">
-			<input type="file" name="uploadfile1" id="write_file1">
-			<input type="file" name="uploadfile2" id="write_file1">
-			<input type="file" name="uploadfile3" id="write_file1">
 		</div>
 	</div>
 	<div id="write_box2">
