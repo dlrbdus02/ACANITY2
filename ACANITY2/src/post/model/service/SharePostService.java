@@ -36,7 +36,7 @@ public class SharePostService {
       return post;
    }
    
-   // 게시글 or 댓글 등록
+   // 게시글 등록
    public int insertPost(Post post){
       Connection conn = getConnection();
       int result = new SharePostDao().insertPost(conn, post);
@@ -48,7 +48,7 @@ public class SharePostService {
       return result;
    }
    
-   // 게시글 or 댓글 수정
+   // 게시글 수정
    public int updatePost(Post post){
       Connection conn = getConnection();
       int result = new SharePostDao().updatePost(conn, post);
@@ -60,10 +60,10 @@ public class SharePostService {
       return result;
    }
    
-   // 게시글 or 댓글 삭제
-   public int deletePost(int no, int depth){
+   // 게시글 삭제
+   public int deletePost(int no){
       Connection conn = getConnection();
-      int result = new SharePostDao().deletePost(conn, no, depth);
+      int result = new SharePostDao().deletePost(conn, no);
       if (result > 0)
          commit(conn);
       else

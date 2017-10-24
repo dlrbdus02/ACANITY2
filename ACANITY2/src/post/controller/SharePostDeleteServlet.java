@@ -18,11 +18,17 @@ public class SharePostDeleteServlet extends HttpServlet {
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// 파일 공유 게시판 : 게시글, 댓글 삭제 처리용 컨트롤러
-		int no = Integer.parseInt(request.getParameter("no"));
-		int depth = Integer.parseInt(request.getParameter("depth"));
+		// 파일 공유 게시판 : 게시글 삭제 처리용 컨트롤러
+		int no = Integer.parseInt(request.getParameter("pno"));
+		int cno = Integer.parseInt(request.getParameter("cno"));
 		
-		int result = new SharePostService().deletePost(no, depth);
+		int result = new SharePostService().deletePost(no);
+		
+		if(result > 0){
+			
+		}else {
+			
+		}
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

@@ -31,7 +31,10 @@ public class SharePostFileDownServlet extends HttpServlet {
 		String originalFileName = request.getParameter("oname");
 		String renameFileName = request.getParameter("rname");
 		
-		File downFile = new File(savePath + "/" + renameFileName);
+		String[] onames = originalFileName.split(",");
+		String[] rnames = renameFileName.split(",");
+		
+		File downFile = new File(savePath + "/" + rnames[0]);
 		
 		//클라이언트로 내보낼 출력 스트림 생성
 		ServletOutputStream downOut = response.getOutputStream();
@@ -39,7 +42,7 @@ public class SharePostFileDownServlet extends HttpServlet {
 		response.setContentType("text/plane; charset=utf-8");
 		//한글 파일명 인코딩 처리함 : 받아주는 시스템의 인코딩으로 변환함
 		response.addHeader("Content-Disposition", "attachment; filename=\""
-				+ new String(originalFileName.getBytes("utf-8"), "ISO-8859-1") + "\"");
+				+ new String(onames[0].getBytes("utf-8"), "ISO-8859-1") + "\"");
 		response.setContentLength((int)downFile.length());
 		
 		//저장된 폴더에서 파일을 읽어서, 클라이언트한테 내보내기 : 파일 다운

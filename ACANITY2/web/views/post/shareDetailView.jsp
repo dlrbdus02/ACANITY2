@@ -5,10 +5,12 @@
 	Member member = (Member)session.getAttribute("member");
 	int cno = Integer.parseInt(request.getParameter("cno"));
 	Post post = (Post)request.getAttribute("post");
-
+	
 	String[] filenames = null;
+	String[] filenames2 = null;
 	if (post.getOriginalFileName() != null){
 		filenames = post.getOriginalFileName().split(",");
+		filenames2 = post.getOriginalFileName().split(",");
 	}
 %>
 <!DOCTYPE html>
@@ -17,6 +19,60 @@
 <meta charset="UTF-8">
 <title>shareListView</title>
 <link rel="stylesheet" href="/acanity/css/sharepost.css">
+<script type="text/javascript">
+
+	function checkall(){
+		for(i=0; i < form.filecheck.length; i++)
+			form.filecheck[i].checked = true;
+	}
+	
+	function uncheckall(){
+		for(i=0; i < form.filecheck.length; i++)
+			form.filecheck[i].checked = false;
+	}
+	
+	
+/* 	function downloadAll(oFrm){
+	  var oChk = oFrm.elements["filecheck"+(suffix++)];
+	  if (oChk){
+	    if (oChk.checked){
+	    location.href = "/acanity/uploadfiles" + oChk.value;
+	    
+	    }
+	  else{
+	    downloadAll(oFrm);
+	    }
+	  }
+	} */
+	
+	function filedown(){
+		//수정해야됨
+		var chk = document.getElementsByName("filecheck[]");
+		var count = 0;
+		var values = "";
+		
+		// 체크된 체크박스가 총 몇 개인지, 체크박스의 value값을 저장하기
+		for(var i=0; i<len; i++){
+			if(chk[i].checked == true) count++;
+			}
+		}
+	
+		
+
+	}
+	
+	function postupdate(){
+		location.href = "/acanity/spupdate?cno=" + <%=cno%> + "&pno=" + <%=post.getpNo()%>;
+	}
+	
+	function postdelete(){
+		location.href = "/acanity/spdelete?cno=" + <%=cno%> + "&pno=" + <%=post.getpNo()%>;
+	}
+	
+	function move1(){
+		location.href = "/acanity/splist?cno=" + <%=cno%>;
+	}
+</script>
 </head>
 <body>
 <div id="list_box1">
@@ -42,28 +98,33 @@
 						</div>
 					</td>
 					<td colspan="2" style="border-right-width: 0; vertical-align: top;">
+						<form name="form">
 						<div id="detail_box2">
 							<% if (post.getOriginalFileName() != null){
 								for(int i = 0; i < filenames.length; i++){ %>
-									<input type="checkbox">
+									<input type="checkbox" name="filecheck[]" value="<%=filenames2[i]%>">
 									<span id="detail_span1"><%= filenames[i] %></span><br>
 							<% 	} %>
-									<input type="button" value="모든 파일 선택" onclick="check();" id="detail_button2" style="cursor: pointer">
-									<input type="button" value="모든 선택 해제" onclick="check();" id="detail_button2" style="cursor: pointer">
+									<input type="button" value="모든 파일 선택" onclick="checkall();" id="detail_button2" style="cursor: pointer">
+									<input type="button" value="모든 선택 해제" onclick="uncheckall();" id="detail_button3" style="cursor: pointer">
+									</div>
+									<input type="button" value="선택한 파일 저장" onclick="filedown();" id="detail_button4" style="cursor: pointer">
 							<% }else{	//파일이 없다면 %>
-									<span id="detail_span2">첨부파일이 없습니다.</span>	
+									<span id="detail_span2">첨부파일이 없습니다.</span>
+									</div>
+									<input type="button" value="파일 없음" id="detail_button4">
 							<%	} %>
-						</div>
+					</form>
 					</td>
 				</tr>
 			</table>
 	</div>
 	<div id="write_box2">
 <% if(member.getmId().equals(post.getpId())){ %>
-		<input type="button" value="수정" onclick="check();" id="detail_button1" style="cursor: pointer">
-		<input type="button" value="삭제" onclick="check();" id="detail_button1" style="cursor: pointer">
+		<input type="button" value="수정" onclick="postupdate();" id="detail_button1" style="cursor: pointer">
+		<input type="button" value="삭제" onclick="postdelete();" id="detail_button1" style="cursor: pointer">
 <% } %>
-		<input type="button" value="목록" onclick="javascript:history.back();" id="detail_button1" style="cursor: pointer">
+		<input type="button" value="목록" onclick="move1();" id="detail_button1" style="cursor: pointer">
 	</div>
 </div>
 

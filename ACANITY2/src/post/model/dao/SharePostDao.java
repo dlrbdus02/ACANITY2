@@ -96,11 +96,13 @@ public class SharePostDao {
 		   
 		   while(rset.next()){
 			   post = new Post();
+			   post.setpNo(rset.getInt("p_no"));
 			   post.setpTitle(rset.getString("p_title"));
 			   post.setpContent(rset.getString("p_content"));
 			   post.setReadCount(rset.getInt("p_readcount"));
 			   post.setpDate(rset.getDate("p_date"));
 			   post.setpId(rset.getString("p_id"));
+			   post.setpPw(rset.getString("p_pw"));
 			   post.setOriginalFileName(rset.getString("p_originalfilename"));
 			   post.setRenameFileName(rset.getString("p_renamefilename"));
 		   }
@@ -146,12 +148,12 @@ public class SharePostDao {
    }
 
    public int updatePost(Connection conn, Post post) {
-      // 게시글/댓글 수정
+      // 게시글 수정
       return 0;
    }
 
-   public int deletePost(Connection conn, int no, int depth) {
-      // 게시글/댓글 삭제
+   public int deletePost(Connection conn, int no) {
+      // 게시글 삭제
       return 0;
    }
 

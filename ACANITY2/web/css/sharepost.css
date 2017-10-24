@@ -364,7 +364,7 @@ body{
 
 #detail_box2{
 	width: 171px;
-	height: 150px;
+	height: 146px;
 	display: inline-block;
 	float: left;
 	position: relative;
@@ -433,6 +433,36 @@ body{
 	border-radius: 6px;
 	position: absolute;
 	top: 80px;
+}
+
+#detail_button3{
+	width: 171px;
+	height: 30px;
+	text-align: center;
+	font-size: 10pt;
+	color: #ffffff;
+	background-color: #525c6d;
+	border-style: solid;
+	border-color: #525c6d;
+	border-bottom-width: 4px;
+	border-radius: 6px;
+	position: absolute;
+	top: 115px;
+}
+
+#detail_button4{
+	width: 181px;
+	height: 42px;
+	text-align: center;
+	font-size: 12pt;
+	color: #304456;
+	background-color: #edeff3;
+	font-weight: bold;
+	border-style: solid;
+	border-color: #304456;
+	border-width: 1px;
+	border-radius: 6px;
+	margin-top: 5px;
 }
 
 #detail_span1{
