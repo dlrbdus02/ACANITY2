@@ -48,8 +48,8 @@
 									<input type="checkbox">
 									<span id="detail_span1"><%= filenames[i] %></span><br>
 							<% 	} %>
-									<button id="detail_button2">선택한 파일 저장하기</button>
-									<button id="detail_button2">모든 파일 저장하기</button>
+									<input type="button" value="모든 파일 선택" onclick="check();" id="detail_button2" style="cursor: pointer">
+									<input type="button" value="모든 선택 해제" onclick="check();" id="detail_button2" style="cursor: pointer">
 							<% }else{	//파일이 없다면 %>
 									<span id="detail_span2">첨부파일이 없습니다.</span>	
 							<%	} %>
