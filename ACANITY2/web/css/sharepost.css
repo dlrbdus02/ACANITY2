@@ -353,3 +353,18 @@ body{
 #write_span3{
 	font-size: 7pt;
 }
+
+#detail_button1{
+	height: 30px;
+	width: 60px;
+	text-align: center;
+	font-size: 11pt;
+	font-weight: bold;
+	color: #ffffff;
+	padding-top: 5px;
+	background-color: #0054a8;
+	border-style: solid;
+	border-color: #0054a8;
+	border-bottom-width: 4px;
+	border-radius: 6px;
+}
