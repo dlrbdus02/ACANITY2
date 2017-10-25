@@ -61,9 +61,9 @@ public class SharePostService {
    }
    
    // 게시글 삭제
-   public int deletePost(int no){
+   public int deletePost(int no, int cno){
       Connection conn = getConnection();
-      int result = new SharePostDao().deletePost(conn, no);
+      int result = new SharePostDao().deletePost(conn, no, cno);
       if (result > 0)
          commit(conn);
       else

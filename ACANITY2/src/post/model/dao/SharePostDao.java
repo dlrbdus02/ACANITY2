@@ -152,9 +152,23 @@ public class SharePostDao {
       return 0;
    }
 
-   public int deletePost(Connection conn, int no) {
+   public int deletePost(Connection conn, int no, int cno) {
       // 게시글 삭제
-      return 0;
+	  int result = 0;
+	  PreparedStatement pstmt = null;
+	  String query = "delete from post where p_code = 2 and p_depth = 1 "
+			  		+ "and p_no = ? and c_no = ?";
+	  try {
+		pstmt = conn.prepareStatement(query);
+		pstmt.setInt(1, no);
+		pstmt.setInt(2, cno);
+		result = pstmt.executeUpdate();
+	} catch (Exception e) {
+		e.printStackTrace();
+	} finally{
+		close(pstmt);
+	}
+	  return result;
    }
 
    public int addReadCount(Connection conn, int no, int cno) {
@@ -169,7 +183,7 @@ public class SharePostDao {
 			pstmt.setInt(1, no);
 			pstmt.setInt(2, cno);
 			result = pstmt.executeUpdate();
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		} finally{
 			close(pstmt);

@@ -22,29 +22,19 @@
 <script type="text/javascript">
 
 	function checkall(){
-		for(i=0; i < form.filecheck.length; i++)
-			form.filecheck[i].checked = true;
+		var chk = document.getElementsByName("filecheck[]");
+		for(i=0; i < chk.length; i++){
+			chk[i].checked = true;
+		}
 	}
 	
 	function uncheckall(){
-		for(i=0; i < form.filecheck.length; i++)
-			form.filecheck[i].checked = false;
+		var chk = document.getElementsByName("filecheck[]");
+		for(i=0; i < chk.length; i++){
+			chk[i].checked = false;
+		}
 	}
-	
-	
-/* 	function downloadAll(oFrm){
-	  var oChk = oFrm.elements["filecheck"+(suffix++)];
-	  if (oChk){
-	    if (oChk.checked){
-	    location.href = "/acanity/uploadfiles" + oChk.value;
-	    
-	    }
-	  else{
-	    downloadAll(oFrm);
-	    }
-	  }
-	} */
-	
+
 	function filedown(){
 		//수정해야됨
 		var chk = document.getElementsByName("filecheck[]");
@@ -63,16 +53,25 @@
 				count++;
 			}
 		}
-		<%-- location.href = "/acanity/spfiledown?cno=" + <%=cno%> + "&pno=" + <%=post.getpNo()%> + "&files=" + values + "&count=" + count; --%>
 		location.href = "/acanity/spfiledown?files=" + values + "&count=" + count;
 	}
 	
 	function postupdate(){
-		location.href = "/acanity/spupdate?cno=" + <%=cno%> + "&pno=" + <%=post.getpNo()%>;
+		var value = prompt("비밀번호를 입력해주세요.");
+		if(value == <%=post.getpPw()%>){
+			location.href = "/acanity/spupdate?cno=" + <%=cno%> + "&pno=" + <%=post.getpNo()%>;
+		}else{
+			alert("비밀번호가 다릅니다.");
+			return;
+		}
 	}
 	
 	function postdelete(){
-		location.href = "/acanity/spdelete?cno=" + <%=cno%> + "&pno=" + <%=post.getpNo()%>;
+		if(!confirm("정말 삭제하시겠습니까?")){
+			return;
+		}else{
+			location.href = "/acanity/spdelete?cno=" + <%=cno%> + "&pno=" + <%=post.getpNo()%>;
+		}
 	}
 	
 	function move1(){
