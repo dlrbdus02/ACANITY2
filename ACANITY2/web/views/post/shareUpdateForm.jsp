@@ -39,10 +39,10 @@
 
 <div id="list_box2">
 	<div id="write_box3">
-		<span id="write_span1">파일 업로드</span>
+		<span id="write_span1">파일 업로드(수정)</span>
 		<a href="javascript:history.back();"><span id="write_span2">뒤로</span></a>
 	</div>
-<form name="form" action="../../spupdate?cno=<%=cno%>&pno=<%=post.getpNo()%>" method="post" enctype="multipart/form-data">
+<form name="form" action="/acanity/spupdate?cno=<%=cno%>&pno=<%=post.getpNo()%>" method="post" enctype="multipart/form-data">
 <input type="hidden" name="writer" value="<%= member.getmId() %>">
 	<div id="write_box1">
 		<div id="write_box1_sub1">
@@ -57,8 +57,7 @@
 				<tr height="149"><th>내용</th>
 					<td>
 					<textarea rows="8" cols="54" name="content" id="write_textarea" placeholder="내용을 입력해주세요.">
-					<%= post.getpContent() %>
-					</textarea>
+<%= post.getpContent() %></textarea>
 					</td></tr>
 			</table>
 		</div>

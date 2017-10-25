@@ -38,7 +38,7 @@
 	function filedown(){
 		//수정해야됨
 		var chk = document.getElementsByName("filecheck[]");
-		var filename = null;
+/* 		var filename = null;
 		for(i=0; i < 3; i++){
 			if(chk[i].checked == true){
 				filename = chk[i].value.split("/");
@@ -46,8 +46,8 @@
 				alert(downfilename);
 			}
 		}
-		
-		/* var count = 0;
+		 */
+		var count = 0;
 		var values = "";
 		
 		// 체크된 체크박스가 총 몇 개인지, 체크박스의 value값을 저장하기
@@ -61,7 +61,7 @@
 				}
 				count++;
 			}
-		} */
+		}
 		location.href = "/acanity/spfiledown?files=" + values + "&count=" + count;
 	}
 	
