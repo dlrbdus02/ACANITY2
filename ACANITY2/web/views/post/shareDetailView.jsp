@@ -101,11 +101,13 @@
 					<td colspan="2" style="border-right-width: 0; vertical-align: top;">
 						<form name="form">
 						<div id="detail_box2">
-							<% if (post.getOriginalFileName() != null){
-								for(int i = 0; i < filenames.length; i++){ %>
+							<% if (post.getOriginalFileName() != null){ %>
+							<div id="detail_box4">
+								<% for(int i = 0; i < filenames.length; i++){ %>
 									<input type="checkbox" name="filecheck[]" value="<%=filenames2[i]%>/<%=filenames[i]%>">
 									<span id="detail_span1"><%= filenames[i] %></span><br>
 							<% 	} %>
+							</div>
 									<input type="button" value="모든 파일 선택" onclick="checkall();" id="detail_button2" style="cursor: pointer">
 									<input type="button" value="모든 선택 해제" onclick="uncheckall();" id="detail_button3" style="cursor: pointer">
 									</div>
