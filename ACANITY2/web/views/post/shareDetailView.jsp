@@ -10,7 +10,7 @@
 	String[] filenames2 = null;
 	if (post.getOriginalFileName() != null){
 		filenames = post.getOriginalFileName().split(",");
-		filenames2 = post.getOriginalFileName().split(",");
+		filenames2 = post.getRenameFileName().split(",");
 	}
 %>
 <!DOCTYPE html>
@@ -52,13 +52,19 @@
 		var values = "";
 		
 		// 체크된 체크박스가 총 몇 개인지, 체크박스의 value값을 저장하기
-		for(var i=0; i<len; i++){
-			if(chk[i].checked == true) count++;
+		for(i=0; i < 3; i++){
+			if(chk[i].checked == true){
+				if(count == 0){
+					values += chk[i].value;
+				}else{
+					values += ",";
+					values += chk[i].value;
+				}
+				count++;
 			}
 		}
-	
-		
-
+		<%-- location.href = "/acanity/spfiledown?cno=" + <%=cno%> + "&pno=" + <%=post.getpNo()%> + "&files=" + values + "&count=" + count; --%>
+		location.href = "/acanity/spfiledown?files=" + values + "&count=" + count;
 	}
 	
 	function postupdate(){
@@ -102,7 +108,7 @@
 						<div id="detail_box2">
 							<% if (post.getOriginalFileName() != null){
 								for(int i = 0; i < filenames.length; i++){ %>
-									<input type="checkbox" name="filecheck[]" value="<%=filenames2[i]%>">
+									<input type="checkbox" name="filecheck[]" value="<%=filenames2[i]%>/<%=filenames[i]%>">
 									<span id="detail_span1"><%= filenames[i] %></span><br>
 							<% 	} %>
 									<input type="button" value="모든 파일 선택" onclick="checkall();" id="detail_button2" style="cursor: pointer">
