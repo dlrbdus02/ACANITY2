@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import="member.model.vo.Member, post.model.vo.Post, java.util.*" %>
+<%@ page import="member.model.vo.Member, post.model.vo.Post, java.util.*, java.io.*" %>
 <%
 	Member member = (Member)session.getAttribute("member");
 	int cno = Integer.parseInt(request.getParameter("cno"));

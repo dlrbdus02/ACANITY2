@@ -41,7 +41,7 @@ public class SharePostInsertServlet extends HttpServlet {
 		String savePath = root + "uploadfiles";
 		
 		// 파일 최대 크기
-		int MaxSize = 10 * 1024 * 1024;
+		int MaxSize = 30 * 1024 * 1024;
 
 		// get으로 전달받은 값
 		int cno = Integer.parseInt(request.getParameter("cno"));

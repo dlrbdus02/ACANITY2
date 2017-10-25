@@ -34,25 +34,22 @@
 			chk[i].checked = false;
 		}
 	}
+	
+	var chk = document.getElementsByName("filecheck[]");
+	var values = null;
+	var count = 0;
 
-	function filedown(){
-		var chk = document.getElementsByName("filecheck[]");
-		var count = 0;
-		var values = "";
-		
-		// 체크된 체크박스가 총 몇 개인지, 체크박스의 value값을 저장하기
-		for(i=0; i < 3; i++){
-			if(chk[i].checked == true){
-				if(count == 0){
-					values += chk[i].value;
-				}else{
-					values += ",";
-					values += chk[i].value;
-				}
-				count++;
+	function filedown(n){
+		if(n < chk.length){
+			if(chk[n].checked){
+				values = chk[n].value.split('/');
+				location.href = "/acanity/spfiledown?rname=" + values[0] + "&oname=" + values[1];
+				setTimeout(function(){
+					filedown(n+1);}, 1000);
+			}else{
+				filedown(n+1);
 			}
 		}
-		location.href = "/acanity/spfiledown?files=" + values + "&count=" + count;
 	}
 	
 	function postupdate(){
@@ -112,7 +109,7 @@
 									<input type="button" value="모든 파일 선택" onclick="checkall();" id="detail_button2" style="cursor: pointer">
 									<input type="button" value="모든 선택 해제" onclick="uncheckall();" id="detail_button3" style="cursor: pointer">
 									</div>
-									<input type="button" value="선택한 파일 저장" onclick="filedown();" id="detail_button4" style="cursor: pointer">
+									<input type="button" value="선택한 파일 저장" onclick="filedown(0);" id="detail_button4" style="cursor: pointer">
 							<% }else{	//파일이 없다면 %>
 									<span id="detail_span2">첨부파일이 없습니다.</span>
 									</div>
