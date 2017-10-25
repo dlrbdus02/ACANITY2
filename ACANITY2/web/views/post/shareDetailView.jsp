@@ -36,17 +36,7 @@
 	}
 
 	function filedown(){
-		//수정해야됨
 		var chk = document.getElementsByName("filecheck[]");
-/* 		var filename = null;
-		for(i=0; i < 3; i++){
-			if(chk[i].checked == true){
-				filename = chk[i].value.split("/");
-				String downfilename = filename[0];
-				alert(downfilename);
-			}
-		}
-		 */
 		var count = 0;
 		var values = "";
 		
