@@ -38,7 +38,16 @@
 	function filedown(){
 		//수정해야됨
 		var chk = document.getElementsByName("filecheck[]");
-		var count = 0;
+		var filename = null;
+		for(i=0; i < 3; i++){
+			if(chk[i].checked == true){
+				filename = chk[i].value.split("/");
+				String downfilename = filename[0];
+				alert(downfilename);
+			}
+		}
+		
+		/* var count = 0;
 		var values = "";
 		
 		// 체크된 체크박스가 총 몇 개인지, 체크박스의 value값을 저장하기
@@ -52,14 +61,14 @@
 				}
 				count++;
 			}
-		}
+		} */
 		location.href = "/acanity/spfiledown?files=" + values + "&count=" + count;
 	}
 	
 	function postupdate(){
 		var value = prompt("비밀번호를 입력해주세요.");
 		if(value == <%=post.getpPw()%>){
-			location.href = "/acanity/spupdate?cno=" + <%=cno%> + "&pno=" + <%=post.getpNo()%>;
+			location.href = "/acanity/spupview?cno=" + <%=cno%> + "&pno=" + <%=post.getpNo()%>;
 		}else{
 			alert("비밀번호가 다릅니다.");
 			return;

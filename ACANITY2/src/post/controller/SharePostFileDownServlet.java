@@ -102,12 +102,6 @@ public class SharePostFileDownServlet extends HttpServlet {
 			}
 			downOut.close();
 			bin.close();
-			
-			try {
-				Thread.sleep(5000);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
 		}
 	}
 

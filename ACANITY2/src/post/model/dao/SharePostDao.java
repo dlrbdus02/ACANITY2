@@ -149,7 +149,29 @@ public class SharePostDao {
 
    public int updatePost(Connection conn, Post post) {
       // 게시글 수정
-      return 0;
+	   int result = 0;
+		PreparedStatement pstmt = null;
+		String query = "update post set p_title = ?, p_content = ?, p_id = ?, "
+					+ "p_pw = ?, p_originalfilename = ?, p_renamefilename = ?"
+					+ "where p_code = 2 and p_depth = 1 "
+					+ "and p_no = ? and c_no = ?";
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, post.getpTitle());
+			pstmt.setString(2, post.getpContent());
+			pstmt.setString(3, post.getpId());
+			pstmt.setString(4, post.getpPw());
+			pstmt.setString(5, post.getOriginalFileName());
+			pstmt.setString(6, post.getRenameFileName());
+			pstmt.setInt(7, post.getpNo());
+			pstmt.setInt(8, post.getcNo());
+			result = pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally{
+			close(pstmt);
+		}
+		return result;
    }
 
    public int deletePost(Connection conn, int no, int cno) {
